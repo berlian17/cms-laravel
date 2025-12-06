@@ -7,7 +7,7 @@
             </button>
             
             <div>
-                <h1 class="text-xl lg:text-2xl font-bold">
+                <h1 class="text-slate-900 text-xl lg:text-2xl font-bold">
                     {{ $pageTitle ?? 'Dashboard' }}
                 </h1>
             </div>
@@ -34,10 +34,6 @@
                     <a href="#" class="flex items-center space-x-3 px-4 py-2.5 hover:bg-slate-50 text-slate-700 transition-colors">
                         <i class="fa-solid fa-user w-4 text-slate-400"></i>
                         <span class="text-sm">My Profile</span>
-                    </a>
-                    <a href="#" class="flex items-center space-x-3 px-4 py-2.5 hover:bg-slate-50 text-slate-700 transition-colors">
-                        <i class="fa-solid fa-gear w-4 text-slate-400"></i>
-                        <span class="text-sm">Settings</span>
                     </a>
                     <hr class="my-2 border-slate-200">
                     <form method="POST" action="{{ route('logout') }}">

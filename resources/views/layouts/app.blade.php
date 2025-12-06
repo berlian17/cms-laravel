@@ -21,7 +21,32 @@
                 @include('layouts.partials.header')
 
                 <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 p-6">
-                    @yield('content')
+                    <div class="max-w-5xl mx-auto">
+                        {{-- Flash Messages --}}
+                        @if (session('success'))
+                            <div 
+                                x-data="{ show: true }" 
+                                x-show="show" 
+                                x-init="setTimeout(() => show = false, 5000)"
+                                class="mb-4 p-4 bg-green-500 text-white rounded-lg shadow transition-opacity"
+                            >
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if (session('error'))
+                            <div 
+                                x-data="{ show: true }" 
+                                x-show="show" 
+                                x-init="setTimeout(() => show = false, 5000)"
+                                class="mb-4 p-4 bg-red-500 text-white rounded-lg shadow transition-opacity"
+                            >
+                                {{ session('error') }}
+                            </div>
+                        @endif
+
+                        @yield('content')
+                    </div>
                 </main>
             </div>
         </div>
