@@ -23,48 +23,68 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">
-                            Nama Website <span class="text-red-500">*</span>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="md:col-span-1">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">
+                        Nama Website <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" name="app_name"
+                        value="{{ old('app_name', $settings->app_name) }}"
+                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
+                        placeholder="Masukkan nama website" required>
+                </div>
+                <div class="md:col-span-1">
+                    <label class="block text-sm font-semibold text-slate-700 mb-2">
+                        Tagline
+                    </label>
+                    <input type="text" name="tagline"
+                        value="{{ old('tagline', $settings->tagline) }}"
+                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
+                        placeholder="Masukkan tagline website" required>
+                </div>
+                <div class="md:col-span-1">
+                    <div class="flex flex-col items-center">
+                        <div class="{{ $settings->logo1 ? 'w-auto' : 'w-28' }} h-28 bg-blue-500/30 rounded-xl flex items-center justify-center shadow-lg mb-4">
+                            @if ($settings->logo1)
+                                <img src="{{ $settings->logo1 }}" alt="logo" class="w-full">
+                            @else
+                                <i class="fa-solid fa-image text-white text-3xl"></i>
+                            @endif
+                        </div>
+
+                        <label class="cursor-pointer inline-flex items-center space-x-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-colors text-sm font-medium text-slate-700">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Pilih Logo 1</span>
+                            <input id="logoInput" type="file" name="logo1" class="hidden" accept="image/*">
                         </label>
-                        <input type="text" name="app_name"
-                            value="{{ old('app_name', $settings->app_name) }}"
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
-                            placeholder="Masukkan nama website" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 mb-2">
-                            Tagline
-                        </label>
-                        <input type="text" name="tagline"
-                            value="{{ old('tagline', $settings->tagline) }}"
-                            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
-                            placeholder="Masukkan tagline website" required>
+
+                        <p id="fileName" class="text-xs text-slate-500 mt-2 italic"></p>
+                        <p class="text-xs text-slate-500 mt-1">
+                            PNG, JPG atau SVG (Max 2MB)
+                        </p>
                     </div>
                 </div>
+                <div class="md:col-span-1">
+                    <div class="flex flex-col items-center">
+                        <div class="{{ $settings->logo2 ? 'w-auto' : 'w-28' }}  h-28 bg-blue-500/30 rounded-xl flex items-center justify-center shadow-lg mb-4">
+                            @if ($settings->logo2)
+                                <img src="{{ $settings->logo2 }}" alt="logo" class="w-full">
+                            @else
+                                <i class="fa-solid fa-image text-white text-3xl"></i>
+                            @endif
+                        </div>
 
-                <div class="flex flex-col items-center">
-                    <div class="w-auto h-28 bg-blue-500/30 rounded-xl flex items-center justify-center shadow-lg mb-4">
-                        @if ($settings->logo)
-                            <img src="{{ asset('/logo/' . $settings->logo) }}" alt="logo" class="w-full h-auto">
-                        @else
-                            <i class="fa-solid fa-image text-white text-3xl"></i>
-                        @endif
+                        <label class="cursor-pointer inline-flex items-center space-x-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-colors text-sm font-medium text-slate-700">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                            <span>Pilih Logo 2</span>
+                            <input id="logoInput" type="file" name="logo2" class="hidden" accept="image/*">
+                        </label>
+
+                        <p id="fileName" class="text-xs text-slate-500 mt-2 italic"></p>
+                        <p class="text-xs text-slate-500 mt-1">
+                            PNG, JPG atau SVG (Max 2MB)
+                        </p>
                     </div>
-
-                    <label class="cursor-pointer inline-flex items-center space-x-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-colors text-sm font-medium text-slate-700">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span>Pilih Logo</span>
-                        <input id="logoInput" type="file" name="logo" class="hidden" accept="image/*">
-                    </label>
-
-                    <p id="fileName" class="text-xs text-slate-500 mt-2 italic"></p>
-
-                    <p class="text-xs text-slate-500 mt-1">
-                        PNG, JPG atau SVG (Max 2MB)
-                    </p>
                 </div>
             </div>
         </div>
@@ -149,47 +169,6 @@
             </div>
         </div>
 
-        {{-- Company Setting --}}
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-            <div class="flex items-center space-x-3 mb-6">
-                <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
-                    <i class="fa-solid fa-building text-white"></i>
-                </div>
-                <div>
-                    <h2 class="text-lg font-bold text-slate-900">Informasi Perusahaan</h2>
-                    <p class="text-sm text-slate-500">Informasi perusahaan Anda</p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-5">
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">
-                        Nama Perusahaan <span class="text-red-500">*</span>
-                    </label>
-                    <input type="text" name="company_name"
-                        value="{{ old('company_name', $settings->company_name) }}"
-                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
-                        placeholder="Masukkan nama perusahaan" required>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">
-                        Deskripsi Singkat <span class="text-red-500">*</span>
-                    </label>
-                    <textarea rows="2" name="short_desc"
-                        class="w-full py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 resize-none"
-                        required>{{ old('short_desc', $settings->short_desc) }}</textarea>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-700 mb-2">
-                        Deskripsi Lengkap <span class="text-red-500">*</span>
-                    </label>
-                    <textarea rows="10" name="long_desc"
-                        class="w-full py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 resize-none"
-                        required>{{ old('long_desc', $settings->long_desc) }}</textarea>
-                </div>
-            </div>
-        </div>
-
         {{-- Social Media --}}
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
             <div class="flex items-center space-x-3 mb-6">
@@ -244,11 +223,11 @@
 
         <div class="flex items-center justify-between bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
             <div class="flex items-center space-x-2 text-sm text-slate-500">
-                <i class="fa-solid fa-clock"></i>
+                <i class="fas fa-clock"></i>
                 <span>Terakhir diubah: {{ $settings->updated_at->locale('id')->diffForHumans() }}</span>
             </div>
             <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
-                <i class="fa-solid fa-floppy-disk"></i>
+                <i class="fas fa-floppy-disk"></i>
                 <span>Simpan Perubahan</span>
             </button>
         </div>

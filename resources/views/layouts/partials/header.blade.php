@@ -31,7 +31,7 @@
 
                 {{-- Dropdown Menu --}}
                 <div id="profile-dropdown" class="hidden absolute right-0 mt-4 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-1000">
-                    <a href="#" class="flex items-center space-x-3 px-4 py-2.5 hover:bg-slate-50 text-slate-700 transition-colors">
+                    <a href="{{ route('profile.edit') }}" class="flex items-center space-x-3 px-4 py-2.5 hover:bg-slate-50 text-slate-700 transition-colors">
                         <i class="fa-solid fa-user w-4 text-slate-400"></i>
                         <span class="text-sm">My Profile</span>
                     </a>

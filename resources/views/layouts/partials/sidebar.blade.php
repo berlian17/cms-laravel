@@ -8,14 +8,13 @@
                 <h1 class="text-lg font-bold text-white">Admin Panel</h1>
             </div>
         </div>
-        <!-- Close button untuk mobile -->
+
         <button id="sidebar-close" class="lg:hidden text-slate-400 hover:text-white transition-colors">
             <i class="fa-solid fa-xmark text-xl"></i>
         </button>
     </div>
 
     <nav class="px-4 py-6 space-y-2">
-        <!-- MAIN Section -->
         <div class="mb-6">
             <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Main</p>
             <a href="{{ route('dashboard') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('dashboard') ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-300 hover:bg-slate-800/50 hover:text-white' }} transition-all duration-200 group">
@@ -24,39 +23,29 @@
             </a>
         </div>
 
-        <!-- CONTENT Section -->
         <div class="mb-6">
             <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Content</p>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800/50 hover:text-white transition-all duration-200 group">
-                <i class="fa-solid fa-file-lines text-lg"></i>
-                <span class="font-medium">Halaman</span>
-            </a>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800/50 hover:text-white transition-all duration-200 group">
+            <a href="{{ route('medias.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('medias.index') ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-300 hover:bg-slate-800/50 hover:text-white' }} transition-all duration-200 group">
                 <i class="fa-solid fa-newspaper text-lg"></i>
-                <span class="font-medium">Blog/Artikel</span>
+                <span class="font-medium">Media & Berita</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800/50 hover:text-white transition-all duration-200 group">
+            <a href="{{ route('services.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('services.index') ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-300 hover:bg-slate-800/50 hover:text-white' }} transition-all duration-200 group">
                 <i class="fa-solid fa-cube text-lg"></i>
-                <span class="font-medium">Produk/Layanan</span>
+                <span class="font-medium">Layanan</span>
             </a>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800/50 hover:text-white transition-all duration-200 group">
+            <a href="{{ route('projects.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('projects.index') ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-300 hover:bg-slate-800/50 hover:text-white' }} transition-all duration-200 group">
                 <i class="fa-solid fa-briefcase text-lg"></i>
-                <span class="font-medium">Portfolio</span>
+                <span class="font-medium">Portofolio</span>
             </a>
         </div>
 
-        <!-- KELOLA Section -->
         <div class="mb-6">
             <p class="px-3 text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Kelola</p>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800/50 hover:text-white transition-all duration-200 group">
-                <i class="fas fa-envelope text-lg"></i>
-                <span class="font-medium">Form Submissions</span>
-            </a>
-            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-800/50 hover:text-white transition-all duration-200 group">
+            <a href="{{ route('users.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('users.index') ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-300 hover:bg-slate-800/50 hover:text-white' }} transition-all duration-200 group">
                 <i class="fas fa-users text-lg"></i>
                 <span class="font-medium">Users</span>
             </a>
-            <a href="{{ route('settings.index') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('settings.index') ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-300 hover:bg-slate-800/50 hover:text-white' }} transition-all duration-200 group">
+            <a href="{{ route('settings.edit') }}" class="flex items-center space-x-3 px-4 py-3 rounded-xl {{ request()->routeIs('settings.edit') ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30' : 'text-slate-300 hover:bg-slate-800/50 hover:text-white' }} transition-all duration-200 group">
                 <i class="fas fa-gear text-lg"></i>
                 <span class="text-medium">Pengaturan</span>
             </a>

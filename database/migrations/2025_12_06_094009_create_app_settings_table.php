@@ -15,15 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('app_name');
             $table->string('tagline')->nullable();
-            $table->string('logo');
+            $table->string('logo1')->nullable();
+            $table->string('logo2')->nullable();
             $table->string('email');
             $table->string('phone')->nullable();
             $table->string('whatsapp')->nullable();
             $table->string('fax')->nullable();
             $table->text('address');
-            $table->string('company_name');
-            $table->text('short_desc');
-            $table->longText('long_desc');
             $table->string('linkedin')->nullable();
             $table->string('facebook')->nullable();
             $table->string('instagram')->nullable();
@@ -37,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('app_settings');
     }
 };

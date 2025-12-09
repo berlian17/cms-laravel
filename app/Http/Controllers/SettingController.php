@@ -8,33 +8,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
 use Throwable;
 
 class SettingController extends Controller
 {
-    public function index()
+    public function edit()
     {
         $settings = Setting::firstOrFail();
 
-        return view('pages.setting', compact('settings'));
+        return view('pages.setting.index', compact('settings'));
     }
 
     public function update(Request $request)
     {
         $validated = $request->validate([
-            'app_name'      => 'required|string',
-            'tagline'       => 'nullable|string',
-            'logo'          => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
+            'app_name'      => 'required|string|max:255',
+            'tagline'       => 'nullable|string|max:255',
+            'logo1'         => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
+            'logo2'         => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
             'email'         => 'required|email',
-            'phone'         => 'nullable|string',
-            'whatsapp'      => 'nullable|string',
-            'fax'           => 'nullable|string',
-            'address'       => 'required|string',
-            'company_name'  => 'required|string',
-            'short_desc'    => 'required|string',
-            'long_desc'     => 'required|string',
+            'phone'         => 'nullable|string|max:255',
+            'whatsapp'      => 'nullable|string|max:255',
+            'fax'           => 'nullable|string|max:255',
+            'address'       => 'required|string|max:255',
             'linkedin'      => 'nullable|url',
             'facebook'      => 'nullable|url',
             'instagram'     => 'nullable|url',
@@ -46,19 +43,36 @@ class SettingController extends Controller
         try {            
             $settings = Setting::first();
 
-            if ($request->hasFile('logo')) {
-                $filename = 'logo_' . time() . '.webp';
+            // Logo 1
+            if ($request->hasFile('logo1')) {
+                $filename = 'logo1_' . time() . '.webp';
                 
-                $image = Image::read($request->file('logo'))
+                $image = Image::read($request->file('logo1'))
                     ->scaleDown(width: 800)
                     ->toWebp(quality: 50);
                 
                 // Simpan
                 Storage::disk('public')->put("logo/$filename", (string) $image);
                 
-                $validated['logo'] = $filename;
+                $validated['logo1'] = asset("storage/logo/$filename");
             } else {
-                unset($validated['logo']);
+                unset($validated['logo1']);
+            }
+
+            // Logo 2
+            if ($request->hasFile('logo2')) {
+                $filename = 'logo2_' . time() . '.webp';
+                
+                $image = Image::read($request->file('logo2'))
+                    ->scaleDown(width: 800)
+                    ->toWebp(quality: 50);
+                
+                // Simpan
+                Storage::disk('public')->put("logo/$filename", (string) $image);
+                
+                $validated['logo2'] = asset("storage/logo/$filename");
+            } else {
+                unset($validated['logo2']);
             }
 
             $settings->update($validated);
