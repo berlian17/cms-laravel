@@ -41,7 +41,7 @@ class SettingController extends Controller
         DB::beginTransaction();
 
         try {            
-            $settings = Setting::first();
+            $setting = Setting::first();
 
             // Logo 1
             if ($request->hasFile('logo1')) {
@@ -54,7 +54,7 @@ class SettingController extends Controller
                 // Simpan
                 Storage::disk('public')->put("logo/$filename", (string) $image);
                 
-                $validated['logo1'] = asset("storage/logo/$filename");
+                $validated['logo1'] = "/storage/logo/$filename";
             } else {
                 unset($validated['logo1']);
             }
@@ -70,25 +70,26 @@ class SettingController extends Controller
                 // Simpan
                 Storage::disk('public')->put("logo/$filename", (string) $image);
                 
-                $validated['logo2'] = asset("storage/logo/$filename");
+                $validated['logo2'] = "/storage/logo/$filename";
             } else {
                 unset($validated['logo2']);
             }
 
-            $settings->update($validated);
+            $setting->update($validated);
 
             DB::commit();
 
             Log::info('Pengaturan berhasil diupdate', [
+                'id'            => $setting->id,
                 'updated_at'    => now(),
                 'updated_by'    => Auth::user()->id,
             ]);
 
-            return back()->with('success', 'Perubahan berhasil disimpan');
+            return back()->with('success', 'Pengaturan berhasil diupdate');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            Log::error('Gagal update Pengaturan', [
+            Log::error('Gagal mengupdate pengaturan', [
                 'error' => $th->getMessage(),
                 'line'  => $th->getLine(),
                 'file'  => $th->getFile(),

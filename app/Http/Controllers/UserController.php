@@ -10,11 +10,28 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
+        $search = $request->query('search');
 
-        return view('pages.user.index', compact('users'));
+        $users = User::when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10)
+            ->withQueryString();
+
+        $totalUsers = User::count();
+        $totalActiveUsers = User::where('status', 1)->count();
+        $totalInactiveUsers = User::where('status', 0)->count();
+
+        return view('pages.user.index', compact(
+            'users',
+            'totalUsers',
+            'totalActiveUsers',
+            'totalInactiveUsers'
+        ));
     }
 
     public function store(Request $request)
@@ -28,7 +45,7 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
-            User::create([
+            $user = User::create([
                 'name'      => $validated['name'],
                 'email'     => $validated['email'],
                 'password'  => $validated['password'],
@@ -38,6 +55,7 @@ class UserController extends Controller
             DB::commit();
 
             Log::info('Pengguna baru berhasil ditambahkan', [
+                'id'            => $user->id,
                 'updated_at'    => now(),
                 'updated_by'    => Auth::user()->id,
             ]);
@@ -58,18 +76,51 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-
+        return response()->json($user);
     }
 
     public function update(Request $request, User $user)
     {
+        $validated = $request->validate([
+            'name'      => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email,' . $user->id,
+            'password'  => 'nullable|min:6|confirmed',
+            'status'    => 'required|in:0,1',
+        ]);
 
-    }
+        if ($user->id === Auth::user()->id) {
+            return back()->with('error', 'Tidak bisa non aktifkan akun sendiri!');
+        }
 
-    public function destroy(User $user)
-    {
-        $user->update(['status' => 0]);
+        DB::beginTransaction();
 
-        return back()->with('success', 'Data telah pengguna di non aktifkan');
+        try {
+            $user->update([
+                'name'      => $validated['name'],
+                'email'     => $validated['email'],
+                'password'  => $validated['password'] ? bcrypt($validated['password']) : $user->password,
+                'status'    => $validated['status'],
+            ]);
+
+            DB::commit();
+
+            Log::info('Data pengguna berhasil diupdate', [
+                'id'            => $user->id,
+                'updated_at'    => now(),
+                'updated_by'    => Auth::user()->id,
+            ]);
+
+            return back()->with('success', 'Data pengguna berhasil diupdate');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            Log::error('Gagal mengupdate data pengguna', [
+                'error' => $th->getMessage(),
+                'line'  => $th->getLine(),
+                'file'  => $th->getFile(),
+            ]);
+
+            return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
     }
 }

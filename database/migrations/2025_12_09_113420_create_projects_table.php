@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('industrial_type_id')->constrained('industrial_types')->cascadeOnDelete();
+            $table->string('industrial_type');
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('cover_img');

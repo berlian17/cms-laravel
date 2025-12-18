@@ -1,41 +1,73 @@
 <x-guest-layout>
-    <!-- Session Status -->
+    @section('title', 'Login')
+
+    <div class="text-center mb-8">
+        <h3 class="text-slate-900 text-2xl font-bold text-primary mb-6">Sign in to Admin Portal</h3>
+    </div>
+
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <h3 class="text-slate-900 text-2xl font-bold text-primary mb-6">Sign in to Admin Portal</h3>
-
-    <form action="{{ route('login') }}" class="space-y-6" method="POST">
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
 
         <div>
-            <label for="email" class="block text-sm font-semibold text-slate-700 mb-2">
-                Email <span class="text-red-600">*</span>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Email
             </label>
-            <input
-                id="email" type="email" name="email"
-                class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none"
-                value="{{ old('email') }}" autofocus required
-            >
+            <input type="email" name="email"
+                value="{{ old('email') }}"
+                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
+                autofocus required>
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
         <div>
-            <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">
-                Password <span class="text-red-600">*</span>
+            <label class="block text-sm font-semibold text-slate-700 mb-2">
+                Password
             </label>
-            <input
-                id="password" type="password" name="password"
-                class="form-input w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none"
-                required
-            >
+            <div class="relative">
+                <input type="password" name="password"
+                    class="password-input w-full px-4 py-3 pr-12 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900"
+                    required>
+
+                <button type="button"
+                    onclick="togglePassword(this)"
+                    class="absolute inset-y-0 right-3 flex items-center text-slate-500 hover:text-slate-700">
+                    <i id="eyePasswordIcon" class="fa-regular fa-eye text-lg"></i>
+                </button>
+            </div>
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        {{-- Submit --}}
-        <button
-            type="submit"
-            class="bg-slate-800 text-white w-full rounded-lg font-semibold text-lg py-3 shadow-2xl hover:shadow-3xl hover:scale-105 flex items-center justify-center"
-        >
-            Sign in
-        </button>
+        <div class="pt-5">
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-cyan-600 transform hover:scale-[1.02] transition duration-200 flex items-center justify-center space-x-2">
+                Sign In
+            </button>
+        </div>
     </form>
+
+    <p class="text-center text-xs text-slate-400 mt-6">
+        © {{ date('Y') }} Admin Panel
+    </p>
+
+    @push('scripts')
+        <script>
+            function togglePassword(button) {
+                const wrapper = button.closest('.relative');
+                const input = wrapper.querySelector('.password-input');
+                const icon = button.querySelector('i');
+
+                if (!input || !icon) return;
+
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            }
+        </script>
+    @endpush
 </x-guest-layout>

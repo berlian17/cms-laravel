@@ -1,0 +1,17 @@
+.ck-content ul,
+.ck-content ol {
+    padding-left: 2rem;
+}
+
+.ck-content ul li,
+.ck-content ol li {
+    margin-bottom: 0.5rem;
+}
+
+.ck-content ul ul,
+.ck-content ul ol,
+.ck-content ol ul,
+.ck-content ol ol {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}

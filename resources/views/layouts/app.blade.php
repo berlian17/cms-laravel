@@ -4,8 +4,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>@yield('title') | {{ config('app.name') }}</title>
+
+        <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css">
 
         {{-- Styles / Scripts --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -25,11 +28,17 @@
                         @include('layouts.partials.alert')
 
                         @yield('content')
+
+                        <p class="text-end text-xs text-slate-400 mt-8">
+                            © {{ date('Y') }} Admin Panel
+                        </p>
                     </div>
                 </main>
             </div>
         </div>
         
+        <script src="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.umd.js"></script>
+
         @stack('scripts')
     </body>
 </html>
