@@ -19,12 +19,16 @@ class UserController extends Controller
                     ->orWhere('email', 'like', "%{$search}%");
             })
             ->orderBy('created_at', 'desc')
-            ->paginate(10)
+            ->paginate(5)
             ->withQueryString();
 
         $totalUsers = User::count();
         $totalActiveUsers = User::where('status', 1)->count();
         $totalInactiveUsers = User::where('status', 0)->count();
+
+        if ($request->ajax()) {
+            return view('pages.user.partials.table', compact('users'))->render();
+        }
 
         return view('pages.user.index', compact(
             'users',
@@ -56,8 +60,8 @@ class UserController extends Controller
 
             Log::info('Pengguna baru berhasil ditambahkan', [
                 'id'            => $user->id,
-                'updated_at'    => now(),
-                'updated_by'    => Auth::user()->id,
+                'created_at'    => now(),
+                'created_by'    => Auth::user()->id,
             ]);
 
             return back()->with('success', 'Pengguna baru berhasil ditambahkan');

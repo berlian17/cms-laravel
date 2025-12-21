@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('cover_img');
             $table->string('category');
             $table->string('author');
+            $table->text('excerpt');
             $table->text('description')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

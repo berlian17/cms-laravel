@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                    <input type="hidden" id="CKEditorFolder" value="project">
+                    <input type="hidden" id="CKEditorFolder" value="media">
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
@@ -79,6 +79,16 @@
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
+                            Deskripsi Singkat <span class="text-red-500">*</span>
+                        </label>
+                        <textarea rows="3" name="excerpt"
+                            class="w-full py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 resize-none"
+                            required>{{ old('excerpt') }}</textarea>
+                        <x-input-error :messages="$errors->get('excerpt')" class="mt-2" />
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">
                             Deskripsi Lengkap <span class="text-red-500">*</span>
                         </label>
                         <textarea rows="3" name="description"
@@ -89,22 +99,25 @@
             </div>
 
             {{-- Tags --}}
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6 relative">
                 <div class="flex items-center space-x-3 mb-6">
                     <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
                         <i class="fas fa-images text-white"></i>
                     </div>
                     <div>
-                        <h2 class="text-lg font-bold text-slate-900">Kata Kunci</h2>
-                        <p class="text-sm text-slate-500">Kata kunci untuk mempermudah SEO.</p>
+                        <h2 class="text-lg font-bold text-slate-900">Kata Kunci (Tags)</h2>
+                        <p class="text-sm text-slate-500">Pilih atau ketik untuk menambahkan kata kunci baru.</p>
                     </div>
                 </div>
-                <div>
-                    <select name="tag" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900" required>
-                        <option value="" selected disabled>-- Pilih salah satu --</option>
-                    </select>
-                    <x-input-error :messages="$errors->get('tag')" class="mt-2" />
-                </div>
+
+                <select name="tags[]" multiple class="tom-select w-full">
+                    @foreach ($tags as $tag)
+                        <option value="{{ $tag->id }}">
+                            {{ $tag->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <x-input-error :messages="$errors->get('tags')" class="mt-2" />
             </div>
 
             <div class="flex items-center justify-end bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
@@ -116,3 +129,11 @@
         </form>
     </section>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/pages/media.js') }}"></script>
+    <script>
+        // Initialize
+        setupCoverPreview('coverInput', 'coverFileName', 'coverPreview');
+    </script>
+@endpush

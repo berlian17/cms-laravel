@@ -1,9 +1,7 @@
 <aside id="sidebar" class="w-64 bg-gradient-to-b from-slate-900 to-slate-800 text-white flex-shrink-0 fixed lg:static inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto border-r border-slate-700/50">
     <div class="p-6 flex items-center justify-between border-b border-slate-700/50">
         <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center shadow-lg">
-                <i class="fas fa-bolt text-white text-xl"></i>
-            </div>
+            <img src="{{ asset('images/CMS_LOGO.webp') }}" alt="logo" class="w-10 h-10">
             <div>
                 <h1 class="text-lg font-bold text-white">Admin Panel</h1>
             </div>

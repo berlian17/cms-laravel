@@ -93,11 +93,16 @@
 
             <div class="flex items-center justify-between bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                 <div class="flex items-center space-x-2 text-sm text-slate-500">
-                    <i class="fas fa-clock"></i>
-                    <span>Terakhir diubah: {{ $service->updated_at->locale('id')->diffForHumans() }}</span>
+                    <i class="fas fa-clock hidden sm:inline-block"></i>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-1">
+                        <span>Terakhir diubah:</span>
+                        <span class="font-semibold">
+                            {{ $service->updated_at->locale('id')->diffForHumans() }}
+                        </span>
+                    </div>
                 </div>
                 <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
-                    <i class="fas fa-floppy-disk"></i>
+                    <i class="fas fa-floppy-disk hidden sm:inline-block"></i>
                     <span>Simpan Perubahan</span>
                 </button>
             </div>
@@ -107,4 +112,8 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/service.js') }}"></script>
+    <script>
+        // Initialize
+        bindIconPreview('#iconInput', '#previewIcon');
+    </script>
 @endpush

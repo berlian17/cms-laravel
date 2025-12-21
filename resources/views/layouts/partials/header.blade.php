@@ -24,18 +24,13 @@
             <div class="relative">
                 <button id="profile-dropdown-btn" type="button" class="flex items-center space-x-2 hover:opacity-80 transition-opacity">
                     <div class="h-9 lg:h-10 px-3 bg-blue-500 rounded-lg flex items-center justify-center text-white font-semibold text-sm shadow-lg">
-                        <span class="sm:block">Admin</span>
+                        <span class="sm:block">{{ ucfirst(Auth::user()->name) }}</span>
                         <i class="fa-solid fa-chevron-down text-xs hidden sm:block ml-1"></i>
                     </div>
                 </button>
 
                 {{-- Dropdown Menu --}}
                 <div id="profile-dropdown" class="hidden absolute right-0 mt-4 w-56 bg-white rounded-xl shadow-xl border border-slate-200 py-2 z-1000">
-                    {{-- <a href="{{ route('profile.edit') }}" class="flex items-center space-x-3 px-4 py-2.5 hover:bg-slate-50 text-slate-700 transition-colors">
-                        <i class="fa-solid fa-user w-4 text-slate-400"></i>
-                        <span class="text-sm">My Profile</span>
-                    </a>
-                    <hr class="my-2 border-slate-200"> --}}
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="w-full flex items-center space-x-3 px-4 py-2.5 hover:bg-red-50 text-red-600 transition-colors text-left">

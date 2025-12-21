@@ -35,6 +35,7 @@
                             placeholder="Masukan nama website" required>
                         <x-input-error :messages="$errors->get('app_name')" class="mt-2" />
                     </div>
+
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             Tagline
@@ -45,6 +46,7 @@
                             placeholder="Masukan tagline website" required>
                         <x-input-error :messages="$errors->get('tagline')" class="mt-2" />
                     </div>
+
                     <div class="md:col-span-1">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">
@@ -73,6 +75,7 @@
                             <x-input-error :messages="$errors->get('logo1')" class="mt-2" />
                         </div>
                     </div>
+
                     <div class="md:col-span-1">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">
@@ -132,6 +135,7 @@
                             <x-input-error :messages="$errors->get('email')" class="mt-2" />
                         </div>
                     </div>
+
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             Telepon
@@ -147,6 +151,7 @@
                             <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                         </div>
                     </div>
+
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             WhatsApp
@@ -162,6 +167,7 @@
                             <x-input-error :messages="$errors->get('whatsapp')" class="mt-2" />
                         </div>
                     </div>
+
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             Fax
@@ -177,6 +183,7 @@
                             <x-input-error :messages="$errors->get('fax')" class="mt-2" />
                         </div>
                     </div>
+
                     <div class="md:col-span-2">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             Alamat <span class="text-red-500">*</span>
@@ -212,6 +219,7 @@
                             placeholder="https://linkedin.com/company/username">
                         <x-input-error :messages="$errors->get('linkedin')" class="mt-2" />
                     </div>
+
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             <i class="fa-brands fa-facebook text-blue-600 mr-1"></i> Facebook
@@ -222,6 +230,7 @@
                             placeholder="https://facebook.com/username">
                         <x-input-error :messages="$errors->get('facebook')" class="mt-2" />
                     </div>
+
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             <i class="fa-brands fa-instagram text-pink-600 mr-1"></i> Instagram
@@ -232,6 +241,7 @@
                             placeholder="https://instagram.com/username">
                         <x-input-error :messages="$errors->get('instagram')" class="mt-2" />
                     </div>
+
                     <div class="md:col-span-1">
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             <i class="fa-brands fa-x text-sky-500 mr-1"></i> Twitter
@@ -247,11 +257,16 @@
 
             <div class="flex items-center justify-between bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                 <div class="flex items-center space-x-2 text-sm text-slate-500">
-                    <i class="fas fa-clock"></i>
-                    <span>Terakhir diubah: {{ $settings->updated_at->locale('id')->diffForHumans() }}</span>
+                    <i class="fas fa-clock hidden sm:inline-block"></i>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-1">
+                        <span>Terakhir diubah:</span>
+                        <span class="font-semibold">
+                            {{ $settings->updated_at->locale('id')->diffForHumans() }}
+                        </span>
+                    </div>
                 </div>
                 <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
-                    <i class="fas fa-floppy-disk"></i>
+                    <i class="fas fa-floppy-disk hidden sm:inline-block"></i>
                     <span>Simpan Perubahan</span>
                 </button>
             </div>
@@ -261,4 +276,9 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/setting.js') }}"></script>
+    <script>
+        // Initialize
+        setupImagePreview('logo1Input', 'logo1Preview', 'logo1FileName');
+        setupImagePreview('logo2Input', 'logo2Preview', 'logo2FileName');
+    </script>
 @endpush

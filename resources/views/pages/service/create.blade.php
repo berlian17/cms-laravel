@@ -91,4 +91,8 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/service.js') }}"></script>
+    <script>
+        // Initialize
+        bindIconPreview('#iconInput', '#previewIcon');
+    </script>
 @endpush

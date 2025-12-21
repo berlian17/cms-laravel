@@ -1,6 +1,7 @@
 function bindIconPreview(inputSelector, previewSelector) {
     const input = document.querySelector(inputSelector);
     const preview = document.querySelector(previewSelector);
+    if (!input || !preview) return;
 
     const update = () => {
         preview.className = input.value
@@ -11,5 +12,3 @@ function bindIconPreview(inputSelector, previewSelector) {
     input.addEventListener('input', update);
     update();
 }
-
-bindIconPreview('#iconInput', '#previewIcon');

@@ -39,7 +39,7 @@
         </div>
 
         <div class="pt-5">
-            <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl hover:from-blue-700 hover:to-cyan-600 transform hover:scale-[1.02] transition duration-200 flex items-center justify-center space-x-2">
+            <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 px-4 rounded-xl shadow-lg shadow-blue-500/30 hover:bg-blue-700 transform hover:scale-[1.02] transition duration-200 flex items-center justify-center space-x-2">
                 Sign In
             </button>
         </div>

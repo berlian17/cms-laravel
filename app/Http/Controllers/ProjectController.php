@@ -36,6 +36,10 @@ class ProjectController extends Controller
         $totalActiveProjects = Project::where('status', 1)->count();
         $totalInactiveProjects = Project::where('status', 0)->count();
 
+        if ($request->ajax()) {
+            return view('pages.project.partials.table', compact('projects'))->render();
+        }
+
         return view('pages.project.index', compact(
             'projects',
             'totalProjects',
@@ -127,8 +131,8 @@ class ProjectController extends Controller
 
             Log::info('Portofolio berhasil ditambahkan', [
                 'id'            => $project->id,
-                'updated_at'    => now(),
-                'updated_by'    => Auth::user()->id,
+                'created_at'    => now(),
+                'created_by'    => Auth::user()->id,
             ]);
 
             return redirect()->route('projects.index')
@@ -251,10 +255,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function destroyGallery($id)
+    public function destroyGallery(ProjectGallery $gallery)
     {
-        $gallery = ProjectGallery::findOrFail($id);
-
         try {
             DB::beginTransaction();
 
@@ -262,17 +264,17 @@ class ProjectController extends Controller
 
             DB::commit();
             
-            Log::info('Gambar gallery portofolio berhasil dihapus', [
-                'id'            => $id,
+            Log::info('Gallery portofolio berhasil dihapus', [
+                'id'            => $gallery->id,
                 'deleted_at'    => now(),
                 'deleted_by'    => Auth::user()->id,
             ]);
 
-            return back()->with('success', 'Gambar gallery portofolio berhasil dihapus');
+            return back()->with('success', 'Gallery portofolio berhasil dihapus');
         } catch (\Throwable $th) {
             DB::rollBack();
 
-            Log::error('Gagal menghapus gambar gallery portofolio', [
+            Log::error('Gagal menghapus gallery portofolio', [
                 'error'         => $th->getMessage(),
                 'line'          => $th->getLine(),
                 'file'          => $th->getFile(),

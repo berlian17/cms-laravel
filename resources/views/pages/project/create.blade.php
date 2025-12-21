@@ -204,4 +204,9 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/project.js') }}"></script>
+    <script>
+        // Initialize
+        setupCoverPreview('coverInput', 'coverFileName', 'coverPreview');
+        setupMultipleImagePreview('galleryInput', 'galleryFileName', 'galleryPreview');
+    </script>
 @endpush

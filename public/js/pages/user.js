@@ -9,9 +9,6 @@ function bindBackdropClose(modalId) {
     });
 }
 
-bindBackdropClose('addModal');
-bindBackdropClose('editModal');
-
 function openModal(modalType, userId) {
     const modal = document.getElementById(modalType);
     modal.classList.remove('hidden');
@@ -41,7 +38,6 @@ function togglePassword(button) {
     const wrapper = button.closest('.relative');
     const input = wrapper.querySelector('.password-input');
     const icon = button.querySelector('i');
-
     if (!input || !icon) return;
 
     if (input.type === 'password') {

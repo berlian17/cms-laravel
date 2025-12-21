@@ -69,80 +69,31 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {{-- Search Input --}}
                 <div class="flex-1">
-                    <form action="{{ route('users.index') }}" method="GET" class="w-full">
-                        <input 
-                            type="text" 
-                            name="search"
-                            value="{{ request('search') }}"
-                            placeholder="Cari pengguna..." 
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                        >
-                    </form>
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        data-url="{{ route('users.index') }}"
+                        placeholder="Cari pengguna..." 
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    >
                 </div>
             </div>
         </div>
 
         {{-- Table --}}
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-gray-50 border-b border-gray-200">
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">#</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Username</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Terakhir Login</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @forelse($users as $user)
-                            <tr class="hover:bg-gray-50 transition duration-150">
-                                <td class="px-6 py-4">
-                                    <div class="text-sm font-semibold text-gray-900">{{ $users->firstItem() + $loop->index }}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm font-semibold text-gray-900">{{ $user->name ?? '-' }}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="text-sm text-gray-700">{{ $user->email ?? '-' }}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="px-3 py-1 text-sm font-semibold rounded-full
-                                        {{ $user->status === 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                        {{ $user->status === 1 ? 'active' : 'inactive' }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 text-sm text-gray-700">
-                                    {{ $user->last_login ? \Carbon\Carbon::parse($user->last_login)->format('d-m-Y H:i:s') : '-' }}
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex gap-2">
-                                        <button
-                                            type="button"
-                                            class="p-2 bg-yellow-50 hover:bg-yellow-100 rounded-lg"
-                                            onclick="openModal('editModal', {{ $user->id }})"
-                                        >
-                                            <i class="fas fa-pen text-yellow-600"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-6 text-center text-gray-500">
-                                    Tidak ada data ditemukan.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden relative">
+            <div id="loadingOverlay" class="hidden absolute inset-0 bg-white/90 flex items-center justify-center z-50">
+                <div class="flex flex-col items-center gap-3">
+                    <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-sm text-gray-600 font-medium">Memuat data...</span>
+                </div>
             </div>
 
-            {{-- Pagination --}}
-            <div class="bg-white px-6 py-4 border-t border-gray-200">
-                {{ $users->links() }}
+            <div id="tableWrapper" class="overflow-x-auto">
+                @include('pages.user.partials.table')
             </div>
         </div>
     </section>
@@ -165,6 +116,7 @@
                         placeholder="Masukan username" required>
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
+
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Email <span class="text-red-500">*</span>
@@ -175,6 +127,7 @@
                         placeholder="Masukan email" required>
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
+
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Password <span class="text-red-500">*</span>
@@ -192,6 +145,7 @@
                     </div>
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                 </div>
+
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-2">
                         Konfirmasi Password <span class="text-red-500">*</span>
@@ -214,7 +168,7 @@
                         class="bg-red-500 hover:bg-red-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
                         Batal
                     </button>
-
+                    
                     <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
                         <i class="fas fa-floppy-disk"></i>
                         <span>Simpan</span>
@@ -316,4 +270,9 @@
 
 @push('scripts')
     <script src="{{ asset('js/pages/user.js') }}"></script>
+    <script>
+        // Initialize
+        bindBackdropClose('addModal');
+        bindBackdropClose('editModal');
+    </script>
 @endpush

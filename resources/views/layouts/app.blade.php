@@ -8,6 +8,8 @@
 
         <title>@yield('title') | {{ config('app.name') }}</title>
 
+        <link rel="icon" type="image/png" href="{{ asset('images/CMS_LOGO.webp') }}">
+
         <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.1/ckeditor5.css">
 
         {{-- Styles / Scripts --}}

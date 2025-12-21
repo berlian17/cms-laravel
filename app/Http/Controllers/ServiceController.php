@@ -27,6 +27,10 @@ class ServiceController extends Controller
         $totalActiveServices = Service::where('status', 1)->count();
         $totalInactiveServices = Service::where('status', 0)->count();
 
+        if ($request->ajax()) {
+            return view('pages.service.partials.table', compact('services'))->render();
+        }
+
         return view('pages.service.index', compact(
             'services',
             'totalServices',
@@ -45,7 +49,7 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title'         => 'required|string|max:255',
             'icon'          => 'required|string|max:50',
-            'short_desc'    => 'required|string|max:500',
+            'short_desc'    => 'required|string|max:300',
             'long_desc'     => 'nullable|string',
         ]);
 
@@ -65,8 +69,8 @@ class ServiceController extends Controller
 
             Log::info('Layanan berhasil ditambahkan', [
                 'id'            => $service->id,
-                'updated_at'    => now(),
-                'updated_by'    => Auth::user()->id,
+                'created_at'    => now(),
+                'created_by'    => Auth::user()->id,
             ]);
 
             return redirect()->route('services.index')
@@ -94,7 +98,7 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title'         => 'required|string|max:255',
             'icon'          => 'required|string|max:50',
-            'short_desc'    => 'required|string|max:500',
+            'short_desc'    => 'required|string|max:300',
             'long_desc'     => 'nullable|string',
             'status'        => 'required|in:0,1',
         ]);

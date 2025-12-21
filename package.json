@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.1.0",
-        "tinymce": "^8.2.2"
+        "tinymce": "^8.2.2",
+        "tom-select": "^2.4.3"
     }
 }

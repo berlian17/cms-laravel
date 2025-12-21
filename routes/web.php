@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MediaController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
@@ -21,6 +20,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [MediaController::class, 'store'])->name('store');
         Route::get('/{media}/edit', [MediaController::class, 'edit'])->name('edit');
         Route::put('/{media}', [MediaController::class, 'update'])->name('update');
+        Route::delete('/tag/{mediaTag}', [MediaController::class, 'destroyTag'])->name('destroy.tag');
     });
 
     Route::prefix('services')->name('services.')->group(function () {
@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/', [ProjectController::class, 'store'])->name('store');
         Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('edit');
         Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
-        Route::delete('/gallery/{id}', [ProjectController::class, 'destroyGallery'])->name('destroy.gallery');
+        Route::delete('/gallery/{gallery}', [ProjectController::class, 'destroyGallery'])->name('destroy.gallery');
     });
 
     Route::prefix('users')->name('users.')->group(function () {
@@ -51,12 +51,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [SettingController::class, 'edit'])->name('edit');
         Route::put('/', [SettingController::class, 'update'])->name('update');
     });
-
-    // Route::prefix('profile')->name('profile.')->group(function () {
-    //     Route::get('/', [ProfileController::class, 'edit'])->name('edit');
-    //     Route::patch('/', [ProfileController::class, 'update'])->name('update');
-    //     Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
-    // });
 });
 
 require __DIR__.'/auth.php';

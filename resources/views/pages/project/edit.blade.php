@@ -224,11 +224,16 @@
 
             <div class="flex items-center justify-between bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
                 <div class="flex items-center space-x-2 text-sm text-slate-500">
-                    <i class="fas fa-clock"></i>
-                    <span>Terakhir diubah: {{ $project->updated_at->locale('id')->diffForHumans() }}</span>
+                    <i class="fas fa-clock hidden sm:inline-block"></i>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-1">
+                        <span>Terakhir diubah:</span>
+                        <span class="font-semibold">
+                            {{ $project->updated_at->locale('id')->diffForHumans() }}
+                        </span>
+                    </div>
                 </div>
                 <button type="submit" class="bg-green-500 hover:bg-green-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
-                    <i class="fas fa-floppy-disk"></i>
+                    <i class="fas fa-floppy-disk hidden sm:inline-block"></i>
                     <span>Simpan Perubahan</span>
                 </button>
             </div>
@@ -254,13 +259,13 @@
                 @csrf
                 @method('DELETE')
 
-                <div class="flex flex-col-reverse sm:flex-row justify-end gap-3">
+                <div class="flex justify-end gap-3">
                     <button type="button" onclick="closeModal('deleteGalleryModal')"
-                        class="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition">
+                        class="items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:bg-slate-100 transition">
                         Batal
                     </button>
 
-                    <button type="submit" class="bg-red-500 hover:bg-red-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center space-x-2">
+                    <button type="submit" class="bg-red-500 hover:bg-red-400 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center gap-2">
                         <i class="fas fa-trash"></i>
                         <span>Hapus</span>
                     </button>
@@ -268,9 +273,14 @@
             </form>
         </div>
     </div>
-
 @endsection
 
 @push('scripts')
     <script src="{{ asset('js/pages/project.js') }}"></script>
+    <script>
+        // Initialize
+        setupCoverPreview('coverInput', 'coverFileName', 'coverPreview');
+        setupMultipleImagePreview('galleryInput', 'galleryFileName', 'galleryPreview');
+        bindBackdropClose('deleteGalleryModal');
+    </script>
 @endpush

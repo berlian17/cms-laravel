@@ -1,10 +1,5 @@
-// Initialize
-setupCoverPreview('coverInput', 'coverFileName', 'coverPreview');
-setupMultipleImagePreview('galleryInput', 'galleryFileName', 'galleryPreview');
-
 function setupCoverPreview(inputId, fileNameId, previewId) {
     const input = document.getElementById(inputId);
-    
     if (!input) return;
     
     input.addEventListener('change', function(e) {
@@ -59,7 +54,6 @@ function setupCoverPreview(inputId, fileNameId, previewId) {
 
 function setupMultipleImagePreview(inputId, fileNameId, previewId) {
     const input = document.getElementById(inputId);
-    
     if (!input) return;
     
     input.addEventListener('change', function(e) {
@@ -124,7 +118,6 @@ function setupMultipleImagePreview(inputId, fileNameId, previewId) {
 
                     <p class="text-sm text-slate-700 mt-2 truncate font-medium">${file.name}</p>
                 `;
-
                 gridContainer.appendChild(imageCard);
             };
             reader.readAsDataURL(file);
@@ -154,7 +147,6 @@ function removePreviewImage(button, inputId, previewId) {
 
     if (gridContainer.children.length === 0) {
         previewContainer.className = "w-full h-72 bg-blue-500/30 rounded-xl shadow-lg mb-4 p-6";
-
         previewContainer.innerHTML = `
             <div class="w-full h-full flex items-center justify-center border-2 border-dashed border-blue-300 rounded-xl">
                 <div class="text-center">
@@ -186,10 +178,7 @@ function bindBackdropClose(modalId) {
     });
 }
 
-bindBackdropClose('deleteGalleryModal');
-
 function deleteGalleryModal(modalType, galleryId) {
-    console.log(galleryId);
     const modal = document.getElementById(modalType);
     modal.classList.remove('hidden');
     modal.classList.add('flex');

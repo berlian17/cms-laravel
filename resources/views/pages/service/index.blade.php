@@ -65,73 +65,31 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {{-- Search Input --}}
                 <div class="flex-1">
-                    <form action="{{ route('services.index') }}" method="GET" class="w-full">
-                        <input 
-                            type="text" 
-                            name="search"
-                            value="{{ request('search') }}"
-                            placeholder="Cari layanan..." 
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
-                        >
-                    </form>
+                    <input 
+                        type="text" 
+                        id="searchInput"
+                        data-url="{{ route('services.index') }}"
+                        placeholder="Cari layanan..." 
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                    >
                 </div>
             </div>
         </div>
 
         {{-- Table --}}
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-gray-50 border-b border-gray-200">
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">#</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Judul</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @forelse($services as $service)
-                            <tr class="hover:bg-gray-50 transition duration-150">
-                                <td class="px-6 py-4">
-                                    <div class="text-sm font-semibold text-gray-900">{{ $services->firstItem() + $loop->index }}</div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
-                                            <i class="{{ $service->icon ?? 'fas fa-image' }} text-white text-2xl"></i>
-                                        </div>
-                                        <div class="text-sm font-semibold text-gray-900">{{ $service->title ?? '-' }}</div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <span class="px-3 py-1 text-sm font-semibold rounded-full
-                                        {{ $service->status === 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                                        {{ $service->status === 1 ? 'active' : 'inactive' }}
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <div class="flex gap-2">
-                                        <a href="{{ route('services.edit', $service->id) }}" class="p-2 bg-yellow-50 hover:bg-yellow-100 rounded-lg">
-                                            <i class="fas fa-pen text-yellow-600"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="px-6 py-6 text-center text-gray-500">
-                                    Tidak ada data ditemukan.
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="bg-white rounded-lg shadow-sm overflow-hidden relative">
+            <div id="loadingOverlay" class="hidden absolute inset-0 bg-white/90 flex items-center justify-center z-50">
+                <div class="flex flex-col items-center gap-3">
+                    <svg class="animate-spin h-8 w-8 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span class="text-sm text-gray-600 font-medium">Memuat data...</span>
+                </div>
             </div>
 
-            {{-- Pagination --}}
-            <div class="bg-white px-6 py-4 border-t border-gray-200">
-                {{ $services->links() }}
+            <div id="tableWrapper" class="overflow-x-auto">
+                @include('pages.service.partials.table')
             </div>
         </div>
     </section>
