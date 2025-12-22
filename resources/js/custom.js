@@ -79,7 +79,6 @@ async function fetchData(url) {
 
         attachPaginationListeners();
         window.history.pushState({}, '', url);
-
     } catch (error) {
         console.error('Error fetching:', error);
         alert('Terjadi kesalahan saat memuat data');

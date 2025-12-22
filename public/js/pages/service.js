@@ -12,3 +12,24 @@ function bindIconPreview(inputSelector, previewSelector) {
     input.addEventListener('input', update);
     update();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    initCharacterCounter('#excerpt', '#excerptCount', 300);
+});
+
+function initCharacterCounter(textareaSelector, counterSelector, max) {
+    const textarea = document.querySelector(textareaSelector);
+    const counter = document.querySelector(counterSelector);
+    if (!textarea || !counter) return;
+
+    const updateCounter = () => {
+        const length = textarea.value.length;
+        counter.textContent = length;
+
+        counter.classList.toggle('text-red-500', length >= max);
+        counter.classList.toggle('font-semibold', length >= max);
+    };
+
+    textarea.addEventListener('input', updateCounter);
+    updateCounter();
+}

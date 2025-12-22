@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -40,19 +41,26 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:users,email',
             'password'  => 'required|min:6|confirmed',
         ]);
 
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('open_modal', 'add');
+        }
+
         DB::beginTransaction();
 
         try {
             $user = User::create([
-                'name'      => $validated['name'],
-                'email'     => $validated['email'],
-                'password'  => $validated['password'],
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'password'  => bcrypt($request->password),
                 'status'    => 1,
             ]);
 
@@ -85,14 +93,21 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'      => 'required|string|max:255',
             'email'     => 'required|email|unique:users,email,' . $user->id,
             'password'  => 'nullable|min:6|confirmed',
             'status'    => 'required|in:0,1',
         ]);
 
-        if ($user->id === Auth::user()->id) {
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput()
+                ->with('open_modal', 'edit');
+        }
+
+        if (($user->id === Auth::user()->id) && ($request->status == 0)) {
             return back()->with('error', 'Tidak bisa non aktifkan akun sendiri!');
         }
 
@@ -100,10 +115,10 @@ class UserController extends Controller
 
         try {
             $user->update([
-                'name'      => $validated['name'],
-                'email'     => $validated['email'],
-                'password'  => $validated['password'] ? bcrypt($validated['password']) : $user->password,
-                'status'    => $validated['status'],
+                'name'      => $request->name,
+                'email'     => $request->email,
+                'password'  => $request->password ? bcrypt($request->password) : $user->password,
+                'status'    => $request->status,
             ]);
 
             DB::commit();

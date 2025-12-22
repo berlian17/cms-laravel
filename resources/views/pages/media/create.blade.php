@@ -13,7 +13,7 @@
                         
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-10 h-10 bg-blue-500 rounded-xl shrink-0 flex items-center justify-center shadow-lg">
                         <i class="fas fa-briefcase text-white"></i>
                     </div>
                     <div>
@@ -30,8 +30,8 @@
                             Gambar Cover <span class="text-red-500">*</span>
                         </label>
                         <div class="flex flex-col items-center">
-                            <div id="coverPreview" class="w-full h-72 bg-blue-500/30 rounded-xl shadow-lg mb-4 p-6">
-                                <div class="w-full h-full flex items-center justify-center border-2 border-dashed border-blue-300 rounded-xl">
+                            <div id="coverPreview" class="w-full h-72 rounded-xl shadow-lg mb-4 p-6 {{ $errors->has('cover_img') ? 'bg-red-500/10 border-2 border-red-400' : 'bg-blue-500/30' }}">
+                                <div class="w-full h-full flex items-center justify-center border-2 border-dashed rounded-xl {{ $errors->has('cover_img') ? 'border-red-400' : 'border-blue-300' }}">
                                     <div class="text-center">
                                         <i class="fas fa-image text-white text-3xl mb-2"></i>
                                         <p class="text-sm text-slate-500">Belum ada gambar dipilih</p>
@@ -42,7 +42,7 @@
                             <label class="cursor-pointer inline-flex items-center space-x-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-lg transition-colors text-sm font-medium text-slate-700">
                                 <i class="fas fa-cloud-arrow-up"></i>
                                 <span>Pilih gambar cover</span>
-                                <input id="coverInput" type="file" name="cover_img" class="hidden" accept="image/*" required>
+                                <input id="coverInput" type="file" name="cover_img" class="hidden" accept="image/*">
                             </label>
 
                             <p id="coverFileName" class="text-xs text-slate-500 mt-2 italic"></p>
@@ -50,7 +50,7 @@
                                 PNG, JPG atau SVG (Max 2MB)
                             </p>
                         </div>
-                        <x-input-error :messages="$errors->get('cover_img')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('cover_img')" class="mt-2 text-center" />
                     </div>
 
                     <div class="md:col-span-1">
@@ -81,9 +81,15 @@
                         <label class="block text-sm font-semibold text-slate-700 mb-2">
                             Deskripsi Singkat <span class="text-red-500">*</span>
                         </label>
-                        <textarea rows="3" name="excerpt"
+                        <textarea rows="3" id="excerpt" name="excerpt" maxlength="300"
                             class="w-full py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 resize-none"
                             required>{{ old('excerpt') }}</textarea>
+                        <div class="flex justify-between mt-1 text-xs text-slate-500">
+                            <span>Maksimal 300 karakter</span>
+                            <span>
+                                <span id="excerptCount">{{ strlen(old('excerpt', '')) }}</span>/300
+                            </span>
+                        </div>
                         <x-input-error :messages="$errors->get('excerpt')" class="mt-2" />
                     </div>
 
@@ -101,7 +107,7 @@
             {{-- Tags --}}
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6 relative">
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-10 h-10 bg-blue-500 rounded-xl shrink-0 flex items-center justify-center shadow-lg">
                         <i class="fas fa-images text-white"></i>
                     </div>
                     <div>
@@ -112,7 +118,7 @@
 
                 <select name="tags[]" multiple class="tom-select w-full">
                     @foreach ($tags as $tag)
-                        <option value="{{ $tag->id }}">
+                        <option value="{{ $tag->id }}" @selected(in_array($tag->id, old('tags', [])))>
                             {{ $tag->name }}
                         </option>
                     @endforeach

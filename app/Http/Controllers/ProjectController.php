@@ -84,7 +84,7 @@ class ProjectController extends Controller
                 
                 $image = Image::read($request->file('cover_img'))
                     ->scaleDown(width: 800)
-                    ->toWebp(quality: 50);
+                    ->toWebp(quality: 100);
                 
                 // Simpan
                 Storage::disk('public')->put("project/$filename", (string) $image);
@@ -115,7 +115,7 @@ class ProjectController extends Controller
 
                     $image = Image::read($gallery)
                         ->scaleDown(width: 800)
-                        ->toWebp(quality: 50);
+                        ->toWebp(quality: 80);
 
                     // Simpan
                     Storage::disk('public')->put("project/gallery/$filename", (string) $image);
@@ -145,6 +145,10 @@ class ProjectController extends Controller
                 'line'  => $th->getLine(),
                 'file'  => $th->getFile(),
             ]);
+
+            if ($th instanceof \Illuminate\Database\QueryException) {
+                return back()->with('error', 'Judul portofolio sudah digunakan');
+            }
 
             return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
@@ -184,26 +188,30 @@ class ProjectController extends Controller
 
         try {
             // Cover
+            $oldCover = $project->cover_img;
             if ($request->hasFile('cover_img')) {
                 $filename = 'project_' . time() . '.webp';
                 
                 $image = Image::read($request->file('cover_img'))
                     ->scaleDown(width: 800)
-                    ->toWebp(quality: 50);
+                    ->toWebp(quality: 100);
                 
                 // Simpan
                 Storage::disk('public')->put("project/$filename", (string) $image);
-                
-                $validated['cover_img'] = asset("storage/project/$filename");
-            } else {
-                unset($validated['cover_img']);
-            }
+                $validated['cover_img'] = "/storage/project/$filename";
 
+                // Hapus file lama
+                $oldPath = str_replace('/storage/', '', $oldCover);
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->delete($oldPath);
+                }
+            }
+            
             $project->update([
                 'industrial_type'   => $validated['industrial_type'],
                 'title'             => $validated['title'],
                 'slug'              => Str::slug($validated['title']),
-                'cover_img'         => $validated['cover_img'] ?? $project->cover_img,
+                'cover_img'         => $validated['cover_img'] ?? $oldCover,
                 'service_name'      => $validated['service_name'],
                 'completion_date'   => $validated['completion_date'],
                 'description'       => Purifier::clean($validated['description']), // Sanitasi HTML CKEditor
@@ -220,7 +228,7 @@ class ProjectController extends Controller
 
                     $image = Image::read($gallery)
                         ->scaleDown(width: 800)
-                        ->toWebp(quality: 50);
+                        ->toWebp(quality: 80);
 
                     // Simpan
                     Storage::disk('public')->put("project/gallery/$filename", (string) $image);
@@ -250,6 +258,10 @@ class ProjectController extends Controller
                 'line'  => $th->getLine(),
                 'file'  => $th->getFile(),
             ]);
+
+            if ($th instanceof \Illuminate\Database\QueryException) {
+                return back()->with('error', 'Judul portofolio sudah digunakan');
+            }
 
             return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }

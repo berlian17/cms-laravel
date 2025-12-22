@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('icon');
-            $table->text('short_desc');
+            $table->text('excerpt');
             $table->text('long_desc')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

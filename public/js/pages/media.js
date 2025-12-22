@@ -52,8 +52,9 @@ function setupCoverPreview(inputId, fileNameId, previewId) {
     });
 }
 
-// Initialize Tom Select for all elements with class 'tom-select
+// Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    // Tom Select for all elements with class 'tom-select
     document.querySelectorAll('.tom-select').forEach(el => {
         new TomSelect(el, {
             plugins: ['remove_button'],
@@ -62,7 +63,26 @@ document.addEventListener('DOMContentLoaded', () => {
             create: true
         });
     });
+
+    initCharacterCounter('#excerpt', '#excerptCount', 300);
 });
+
+function initCharacterCounter(textareaSelector, counterSelector, max) {
+    const textarea = document.querySelector(textareaSelector);
+    const counter = document.querySelector(counterSelector);
+    if (!textarea || !counter) return;
+
+    const updateCounter = () => {
+        const length = textarea.value.length;
+        counter.textContent = length;
+
+        counter.classList.toggle('text-red-500', length >= max);
+        counter.classList.toggle('font-semibold', length >= max);
+    };
+
+    textarea.addEventListener('input', updateCounter);
+    updateCounter();
+}
 
 function bindBackdropClose(modalId) {
     const modal = document.getElementById(modalId);

@@ -99,7 +99,7 @@
     </section>
 
     {{-- Modal Add User --}}
-    <div id="addModal" class="{{ $errors->any() ? 'flex' : 'hidden' }} fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center px-4">
+    <div id="addModal" class="{{ session('open_modal') === 'add' ? 'flex' : 'hidden' }} fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center px-4">
         <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-8 animate-scaleUp">
             <h2 class="text-lg font-bold text-slate-900 mb-4">Tambah Pengguna Baru</h2>
 
@@ -179,7 +179,7 @@
     </div>
 
     {{-- Modal Edit User --}}
-    <div id="editModal" class="{{ $errors->any() ? 'flex' : 'hidden' }} fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center px-4">
+    <div id="editModal" class="{{ session('open_modal') === 'edit' ? 'flex' : 'hidden' }} fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center px-4">
         <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl p-8 animate-scaleUp">
             <h2 class="text-lg font-bold text-slate-900 mb-4">Edit Data Pengguna</h2>
 

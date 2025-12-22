@@ -49,7 +49,7 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title'         => 'required|string|max:255',
             'icon'          => 'required|string|max:50',
-            'short_desc'    => 'required|string|max:300',
+            'excerpt'       => 'required|string|max:300',
             'long_desc'     => 'nullable|string',
         ]);
 
@@ -60,7 +60,7 @@ class ServiceController extends Controller
                 'title'         => $validated['title'],
                 'slug'          => Str::slug($validated['title']),
                 'icon'          => $validated['icon'],
-                'short_desc'    => $validated['short_desc'],
+                'excerpt'       => $validated['excerpt'],
                 'long_desc'     => Purifier::clean($validated['long_desc']), // Sanitasi HTML CKEditor
                 'status'        => 1,
             ]);
@@ -84,6 +84,10 @@ class ServiceController extends Controller
                 'file'  => $th->getFile(),
             ]);
 
+            if ($th instanceof \Illuminate\Database\QueryException) {
+                return back()->with('error', 'Nama layanan sudah digunakan');
+            }
+
             return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
     }
@@ -98,7 +102,7 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title'         => 'required|string|max:255',
             'icon'          => 'required|string|max:50',
-            'short_desc'    => 'required|string|max:300',
+            'excerpt'       => 'required|string|max:300',
             'long_desc'     => 'nullable|string',
             'status'        => 'required|in:0,1',
         ]);
@@ -110,7 +114,7 @@ class ServiceController extends Controller
                 'title'         => $validated['title'],
                 'slug'          => Str::slug($validated['title']),
                 'icon'          => $validated['icon'],
-                'short_desc'    => $validated['short_desc'],
+                'excerpt'       => $validated['excerpt'],
                 'long_desc'     => Purifier::clean($validated['long_desc']), // Sanitasi HTML CKEditor
                 'status'        => $validated['status'],
             ]);
@@ -133,6 +137,10 @@ class ServiceController extends Controller
                 'line'  => $th->getLine(),
                 'file'  => $th->getFile(),
             ]);
+
+            if ($th instanceof \Illuminate\Database\QueryException) {
+                return back()->with('error', 'Nama layanan sudah digunakan');
+            }
 
             return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }

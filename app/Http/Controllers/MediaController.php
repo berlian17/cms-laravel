@@ -73,7 +73,7 @@ class MediaController extends Controller
                 
                 $image = Image::read($request->file('cover_img'))
                     ->scaleDown(width: 800)
-                    ->toWebp(quality: 50);
+                    ->toWebp(quality: 100);
                 
                 // Simpan
                 Storage::disk('public')->put("media/$filename", (string) $image);
@@ -123,14 +123,14 @@ class MediaController extends Controller
 
             DB::commit();
 
-            Log::info('media berhasil ditambahkan', [
+            Log::info('Media berhasil ditambahkan', [
                 'id'            => $media->id,
                 'created_at'    => now(),
                 'created_by'    => Auth::user()->id,
             ]);
 
             return redirect()->route('medias.index')
-                ->with('success', 'Pmedia berhasil ditambahkan');
+                ->with('success', 'Media berhasil ditambahkan');
         } catch (\Throwable $th) {
             DB::rollBack();
 
@@ -139,6 +139,10 @@ class MediaController extends Controller
                 'line'  => $th->getLine(),
                 'file'  => $th->getFile(),
             ]);
+
+            if ($th instanceof \Illuminate\Database\QueryException) {
+                return back()->with('error', 'Judul media sudah digunakan');
+            }
 
             return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
@@ -178,25 +182,29 @@ class MediaController extends Controller
 
         try {
             // Cover
+            $oldCover = $media->cover_img;
             if ($request->hasFile('cover_img')) {
                 $filename = 'media_' . time() . '.webp';
                 
                 $image = Image::read($request->file('cover_img'))
                     ->scaleDown(width: 800)
-                    ->toWebp(quality: 50);
+                    ->toWebp(quality: 100);
                 
                 // Simpan
                 Storage::disk('public')->put("media/$filename", (string) $image);
-                
                 $validated['cover_img'] = "/storage/media/$filename";
-            } else {
-                unset($validated['cover_img']);
+
+                // Hapus file lama
+                $oldPath = str_replace('/storage/', '', $oldCover);
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->delete($oldPath);
+                }
             }
 
             $media->update([
                 'title'             => $validated['title'],
                 'slug'              => Str::slug($validated['title']),
-                'cover_img'         => $validated['cover_img'] ?? $media->cover_img,
+                'cover_img'         => $validated['cover_img'] ?? $oldCover,
                 'category'          => $validated['category'],
                 'author'            => $validated['author'],
                 'excerpt'           => $validated['excerpt'],
@@ -249,6 +257,10 @@ class MediaController extends Controller
                 'line'  => $th->getLine(),
                 'file'  => $th->getFile(),
             ]);
+
+            if ($th instanceof \Illuminate\Database\QueryException) {
+                return back()->with('error', 'Judul media sudah digunakan');
+            }
 
             return back()->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }

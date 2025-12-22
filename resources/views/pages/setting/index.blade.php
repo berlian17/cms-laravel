@@ -15,7 +15,7 @@
             {{-- Website Setting --}}
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-10 h-10 bg-blue-500 rounded-xl shrink-0 flex items-center justify-center shadow-lg">
                         <i class="fas fa-globe text-white"></i>
                     </div>
                     <div>
@@ -110,7 +110,7 @@
             {{-- Contact Setting --}}
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-10 h-10 bg-blue-500 rounded-xl shrink-0 flex items-center justify-center shadow-lg">
                         <i class="fas fa-address-book text-white"></i>
                     </div>
                     <div>
@@ -199,7 +199,7 @@
             {{-- Social Media --}}
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-10 h-10 bg-blue-500 rounded-xl shrink-0 flex items-center justify-center shadow-lg">
                         <i class="fas fa-share-nodes text-white"></i>
                     </div>
                     <div>

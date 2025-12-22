@@ -13,7 +13,7 @@
                         
             <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-6">
                 <div class="flex items-center space-x-3 mb-6">
-                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-10 h-10 bg-blue-500 rounded-xl shrink-0 flex items-center justify-center shadow-lg">
                         <i class="fas fa-cube text-white"></i>
                     </div>
                     <div>
@@ -40,10 +40,16 @@
                             <label class="block text-sm font-semibold text-slate-700 mb-2">
                                 Deskripsi Singkat <span class="text-red-500">*</span>
                             </label>
-                            <textarea rows="3" name="short_desc"
+                            <textarea rows="3" id="excerpt" name="excerpt" maxlength="300"
                                 class="w-full py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 resize-none"
-                                required>{{ old('short_desc') }}</textarea>
-                            <x-input-error :messages="$errors->get('short_desc')" class="mt-2" />
+                                required>{{ old('excerpt') }}</textarea>
+                            <div class="flex justify-between mt-1 text-xs text-slate-500">
+                                <span>Maksimal 300 karakter</span>
+                                <span>
+                                    <span id="excerptCount">{{ strlen(old('excerpt', '')) }}</span>/300
+                                </span>
+                            </div>
+                            <x-input-error :messages="$errors->get('excerpt')" class="mt-2" />
                         </div>
                     </div>
 
