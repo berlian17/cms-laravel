@@ -15,10 +15,12 @@
 
         <div class="flex items-center space-x-3 lg:space-x-4">
             {{-- Notifications --}}
-            <button class="relative p-2 hover:bg-slate-200 rounded-lg transition-colors">
+            <a href="{{ route('dashboard') }}#notification-table" class="relative p-2 hover:bg-slate-200 rounded-lg transition-colors">
                 <i class="fa-solid fa-bell text-slate-600 text-lg"></i>
-                <span class="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full animate-ping"></span>
-            </button>
+                @if ($notificationCount > 0)
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-blue-500 rounded-full animate-ping"></span>
+                @endif
+            </a>
 
             {{-- Profile Dropdown --}}
             <div class="relative">

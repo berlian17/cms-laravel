@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::redirect('/', '/dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/notification/{id}', [DashboardController::class, 'notification'])->name('notification');
     Route::post('/upload/ckeditor', [UploadController::class, 'ckeditorUpload'])->name('ckeditor.upload');
 
     Route::prefix('medias')->name('medias.')->group(function () {

@@ -144,6 +144,17 @@ function attachPaginationListeners() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    const target = document.querySelector(hash);
+    if (!target) return;
+
+    target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
+
     attachPaginationListeners();
 });
 
