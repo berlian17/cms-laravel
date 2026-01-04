@@ -1,3 +1,8 @@
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    initCharacterCounter('#description', '#descriptionCount', 300);
+});
+
 function setupImagePreview(inputId, previewId, fileNameId) {
     const input = document.getElementById(inputId);
     if (!input) return;
@@ -56,4 +61,21 @@ function setupImagePreview(inputId, previewId, fileNameId) {
             `;
         }
     });
+}
+
+function initCharacterCounter(textareaSelector, counterSelector, max) {
+    const textarea = document.querySelector(textareaSelector);
+    const counter = document.querySelector(counterSelector);
+    if (!textarea || !counter) return;
+
+    const updateCounter = () => {
+        const length = textarea.value.length;
+        counter.textContent = length;
+
+        counter.classList.toggle('text-red-500', length >= max);
+        counter.classList.toggle('font-semibold', length >= max);
+    };
+
+    textarea.addEventListener('input', updateCounter);
+    updateCounter();
 }

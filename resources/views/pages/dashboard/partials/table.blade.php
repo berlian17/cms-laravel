@@ -7,6 +7,7 @@
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Topik</th>
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Email</th>
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Tanggal</th>
             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Aksi</th>
         </tr>
     </thead>
@@ -45,6 +46,11 @@
                         {{ $mail->status === 'read' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                         {{ $mail->status === 'read' ? 'read' : 'unread' }}
                     </span>
+                </td>
+                <td class="px-6 py-4">
+                    <div class="text-sm text-gray-700">
+                        {{ $mail->created_at ? \Carbon\Carbon::parse($mail->created_at)->format('d-m-Y H:i:s') : '-' }}
+                    </div>
                 </td>
                 <td class="px-6 py-4">
                     <div class="flex gap-2">

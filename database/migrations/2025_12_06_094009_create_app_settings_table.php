@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('app_name');
             $table->string('tagline')->nullable();
+            $table->text('description')->nullable();
             $table->string('logo1')->nullable();
             $table->string('logo2')->nullable();
             $table->string('email');

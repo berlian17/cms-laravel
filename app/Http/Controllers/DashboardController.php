@@ -14,12 +14,19 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
+        $search = $request->query('search');
+
         $totalMedias = Media::count();
         $totalServices = Service::count();
         $totalProjects = Project::count();
         $totalUsers = User::count();
 
-        $mails = ContactMail::orderByRaw("FIELD(contact_mails.status, 'unread', 'read', 'replied', 'archived')")
+        $mails = ContactMail::when($search, function ($query, $search) {
+                $query->where('full_name', 'like', "%{$search}%")
+                    ->orWhere('subject', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->orderByRaw("FIELD(contact_mails.status, 'unread', 'read', 'replied', 'archived')")
             ->paginate(5)
             ->withQueryString();
 
@@ -43,7 +50,7 @@ class DashboardController extends Controller
 
         $contactMail->markAsRead();
 
-        return view('pages.notification', compact(
+        return view('pages.dashboard.notification', compact(
             'contactMail',
             'appSetting'
         ));

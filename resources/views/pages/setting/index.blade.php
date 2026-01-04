@@ -47,6 +47,22 @@
                         <x-input-error :messages="$errors->get('tagline')" class="mt-2" />
                     </div>
 
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-slate-700 mb-2">
+                            Deskripsi Website <span class="text-red-500">*</span>
+                        </label>
+                        <textarea rows="3" id="description" name="description" maxlength="300"
+                            class="w-full py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900 resize-none"
+                            required>{{ old('description', $settings->description) }}</textarea>
+                        <div class="flex justify-between mt-1 text-xs text-slate-500">
+                            <span>Maksimal 300 karakter</span>
+                            <span>
+                                <span id="descriptionCount">{{ strlen(old('description', '')) }}</span>/300
+                            </span>
+                        </div>
+                        <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                    </div>
+
                     <div class="md:col-span-1">
                         <div>
                             <label class="block text-sm font-semibold text-slate-700 mb-2">

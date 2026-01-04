@@ -14,6 +14,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/notification/{id}', [DashboardController::class, 'notification'])->name('notification');
     Route::post('/upload/ckeditor', [UploadController::class, 'ckeditorUpload'])->name('ckeditor.upload');
+    Route::get('/tools/sitemap/download', [SettingController::class, 'downloadSitemap'])->name('sitemap.download');
 
     Route::prefix('medias')->name('medias.')->group(function () {
         Route::get('/', [MediaController::class, 'index'])->name('index');

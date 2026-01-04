@@ -65,11 +65,11 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {{-- Search Input --}}
                 <div class="flex-1">
-                    <input 
-                        type="text" 
+                    <input
+                        type="text"
                         id="searchInput"
                         data-url="{{ route('medias.index') }}"
-                        placeholder="Cari media & berita..." 
+                        placeholder="Cari media & berita..."
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
                     >
                 </div>

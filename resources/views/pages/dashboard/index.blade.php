@@ -151,11 +151,22 @@
         </div>
     </section>
 
-    <section class="bg-white rounded-2xl shadow-sm border border-slate-200">
-        <div class="p-8 border-b border-slate-100 flex items-center justify-between">
+    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 mb-6">
+        <div class="p-8 border-b border-slate-100 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
                 <h2 class="text-lg font-bold text-slate-900">Pesan Masuk Terbaru</h2>
                 <p class="text-sm text-slate-500 mt-1">Form submissions dari website</p>
+            </div>
+
+            <div class="w-full md:w-auto">
+                {{-- Search Input --}}
+                <input
+                    type="text"
+                    id="searchInput"
+                    data-url="{{ route('dashboard') }}"
+                    placeholder="Cari pesan..."
+                    class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
+                >
             </div>
         </div>
 
@@ -174,6 +185,27 @@
             <div id="tableWrapper" class="overflow-x-auto">
                 @include('pages.dashboard.partials.table')
             </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 px-6 py-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center shadow-lg shrink-0">
+                    <i class="fas fa-globe text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-slate-900">Sitemap</h2>
+                    <p class="text-sm text-slate-500">
+                        Sitemap website Anda dapat diunduh di sini.
+                    </p>
+                </div>
+            </div>
+
+            <a href="{{ route('sitemap.download') }}" class="inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition w-full sm:w-auto">
+                <i class="fas fa-download"></i>
+                Download Sitemap
+            </a>
         </div>
     </section>
 @endsection
