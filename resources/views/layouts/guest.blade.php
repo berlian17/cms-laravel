@@ -4,8 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta name="robots" content="noindex, nofollow">
+        <meta name="googlebot" content="noindex, nofollow">
 
         <title>@yield('title') | {{ config('app.name') }}</title>
+
+        <link rel="icon" type="image/png" href="{{ asset('images/CMS_LOGO.webp') }}">
 
         {{-- Styles / Scripts --}}
         @vite(['resources/css/app.css', 'resources/js/app.js'])
