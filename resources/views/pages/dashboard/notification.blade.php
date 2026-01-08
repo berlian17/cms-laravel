@@ -91,7 +91,7 @@
                                         {{ $label }}
                                     </div>
                                     <div class="bg-[#F4F9FF] p-2 sm:p-3 text-xs sm:text-sm col-span-1 sm:col-span-2 rounded-b-lg sm:rounded-r-lg sm:rounded-b-none">
-                                        @if($label === 'Email')
+                                        @if($label == 'Email')
                                             <a href="mailto:{{ $value }}" class="text-[#003A63] hover:underline break-all">
                                                 {{ $value }}
                                             </a>

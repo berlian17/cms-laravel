@@ -118,8 +118,8 @@
                             Status Media & Berita <span class="text-red-500">*</span>
                         </label>
                         <select name="status" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-slate-900" required>
-                            <option value="1" {{ old('status', $media->status) === 1 ? 'selected' : '' }}>Aktif</option>
-                            <option value="0" {{ old('status', $media->status) === 0 ? 'selected' : '' }}>Non Aktif</option>
+                            <option value="1" {{ old('status', $media->status) == 1 ? 'selected' : '' }}>Aktif</option>
+                            <option value="0" {{ old('status', $media->status) == 0 ? 'selected' : '' }}>Non Aktif</option>
                         </select>
                         <x-input-error :messages="$errors->get('status')" class="mt-2" />
                     </div>

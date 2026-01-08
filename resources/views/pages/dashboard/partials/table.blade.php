@@ -24,15 +24,15 @@
                     <div class="text-sm text-gray-700">{{ $mail->subject ?? '-' }}</div>
                 </td>
                 <td class="px-6 py-4">
-                    @if ($mail->topic === 'quotation')
+                    @if ($mail->topic == 'quotation')
                         <span class="inline-block bg-yellow-600 text-white text-xs px-4 py-2 rounded-full font-semibold">
                             {{ $mail->topic }}
                         </span>
-                    @elseif ($mail->topic === 'technical')
+                    @elseif ($mail->topic == 'technical')
                         <span class="inline-block bg-blue-600 text-white text-xs px-4 py-2 rounded-full font-semibold">
                             {{ $mail->topic }}
                         </span>
-                    @elseif ($mail->topic === 'partnership')
+                    @elseif ($mail->topic == 'partnership')
                         <span class="inline-block bg-purple-600 text-white text-xs px-4 py-2 rounded-full font-semibold">
                             {{ $mail->topic }}
                         </span>
@@ -43,8 +43,8 @@
                 </td>
                 <td class="px-6 py-4">
                     <span class="px-3 py-1 text-sm font-semibold rounded-full
-                        {{ $mail->status === 'read' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                        {{ $mail->status === 'read' ? 'read' : 'unread' }}
+                        {{ $mail->status == 'read' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                        {{ $mail->status == 'read' ? 'read' : 'unread' }}
                     </span>
                 </td>
                 <td class="px-6 py-4">

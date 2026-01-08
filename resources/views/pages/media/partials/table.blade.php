@@ -19,15 +19,15 @@
                     <div class="text-sm font-semibold text-gray-900">{{ $media->title ?? '-' }}</div>
                 </td>
                 <td class="px-6 py-4">
-                    @if ($media->category === 'News')
+                    @if ($media->category == 'News')
                         <span class="inline-block bg-red-600 text-white text-xs px-4 py-2 rounded-full font-semibold">
                             {{ $media->category }}
                         </span>
-                    @elseif ($media->category === 'Blogs')
+                    @elseif ($media->category == 'Blogs')
                         <span class="inline-block bg-blue-600 text-white text-xs px-4 py-2 rounded-full font-semibold">
                             {{ $media->category }}
                         </span>
-                    @elseif ($media->category === 'Events')
+                    @elseif ($media->category == 'Events')
                         <span class="inline-block bg-purple-600 text-white text-xs px-4 py-2 rounded-full font-semibold">
                             {{ $media->category }}
                         </span>
@@ -38,8 +38,8 @@
                 </td>
                 <td class="px-6 py-4">
                     <span class="px-3 py-1 text-sm font-semibold rounded-full
-                        {{ $media->status === 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                        {{ $media->status === 1 ? 'active' : 'inactive' }}
+                        {{ $media->status == 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                        {{ $media->status == 1 ? 'active' : 'inactive' }}
                     </span>
                 </td>
                 <td class="px-6 py-4">

@@ -23,8 +23,8 @@
                 </td>
                 <td class="px-6 py-4">
                     <span class="px-3 py-1 text-sm font-semibold rounded-full
-                        {{ $user->status === 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
-                        {{ $user->status === 1 ? 'active' : 'inactive' }}
+                        {{ $user->status == 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                        {{ $user->status == 1 ? 'active' : 'inactive' }}
                     </span>
                 </td>
                 <td class="px-6 py-4 text-sm text-gray-700">
